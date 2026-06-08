@@ -9,10 +9,10 @@ import { init, parse } from 'es-module-lexer'
 import { isDynamicPattern } from 'tinyglobby'
 import {
   type RolldownOptions,
-  type RolldownOutput,
   type OutputOptions as RolldownOutputOptions,
   rolldown,
 } from 'rolldown'
+import type { RolldownOutput } from '#types/internal/rollupTypeCompat'
 import type { DepsOptimizerEsbuildOptions } from '#types/internal/esbuildOptions'
 import type { ResolvedConfig } from '../config'
 import {

@@ -1,9 +1,10 @@
 import path from 'node:path'
 import MagicString from 'magic-string'
-import type { RolldownOutput, RollupError } from 'rolldown'
+import type { RollupError } from 'rolldown'
 import colors from 'picocolors'
 import { type ImportSpecifier, init, parse } from 'es-module-lexer'
 import { viteWebWorkerPostPlugin as nativeWebWorkerPostPlugin } from 'rolldown/experimental'
+import type { RolldownOutput } from '#types/internal/rollupTypeCompat'
 import type { ResolvedConfig } from '../config'
 import type { Plugin } from '../plugin'
 import { ENV_ENTRY, ENV_PUBLIC_PATH } from '../constants'
@@ -270,6 +271,9 @@ async function bundleWorkerEntry(
   const {
     output: [outputChunk, ...outputChunks],
   } = result
+  if (outputChunk.type !== 'chunk') {
+    throw new Error('Worker bundle entry must be a chunk')
+  }
   const assets = outputChunks.map((outputChunk) =>
     outputChunk.type === 'asset'
       ? outputChunk
